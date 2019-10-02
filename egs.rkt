@@ -1,0 +1,79 @@
+#lang racket
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; CS 3180 Fall 2019 Small project 00
+;; Trent J. M. Church
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Description
+;;finds the max of two numbers
+;;returns the max
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define (max2 a b)
+  (if (> b a) b a))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Description
+;;finds the max of N numbers
+;;returns the max
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define (max lst)
+  (cond
+    [(empty? lst) "Bad"]
+    [(empty? (rest lst))(first lst)]
+    [else (max2(first lst)(max(rest lst)))]
+    )
+)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Description
+;;finds whether a or be comes find in a list
+;;returns the True if a before b in the list
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define(before-in-list? lst a b)
+  (cond
+    [(empty? lst) #F]
+    [(equal? (first lst) b)#F]
+    [(equal? (first lst) a)#T]
+    [else (before-in-list? (rest lst) a b)]
+
+   )
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Description
+;;finds the dot product of two vectors
+;;returns the dot product
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define(dotProduct lsta lstb)
+  (cond
+    [(not(equal? (length lsta) (length lstb)))"*incompatible*"]
+    [(empty? lsta) 0]
+    [else (+ (* (first lsta) (first lstb)) (dotProduct(rest lsta) (rest lstb)))]
+
+   )
+)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Description
+;;removes all occurences of A in lst
+;;returns new lst
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define (removeARow lst a)
+  (cond
+  [(empty? lst)  lst]
+  [(equal? (first lst) a)  (removeARow (rest lst) a)]
+  [else (append (list (first lst))(removeARow (rest lst) a))]
+  )
+)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;Description
+;;removes all occurences of each character in lstb in lsta
+;;returns new lsta
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define (removeAll lsta lstb)
+  (cond
+    [(empty? lsta) lsta]
+    [(empty? lstb) lsta]
+    [else (removeAll (removeARow lsta (first lstb)) (rest lstb))]   
+    
+   )
+)
